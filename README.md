@@ -1,2 +1,2 @@
 # bm
-C/C++ search tool based on bm algorithm
+C/C++ search tool based on Boyer-Moore algorithm
