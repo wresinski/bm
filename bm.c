@@ -115,9 +115,9 @@ int searchFile(char *path, char *t) {
             i = index + tLength;
             c++;
             line_p++;
+            if (c > 0 && line_p == 1)
+                printf(RED "\n%s:\n" NONE, path);
         }
-        if (c > 0 && line_p == 1)
-            printf(RED "\n%s:\n" NONE, path);
         if (c > 0)
             printf(YELLOW "%d:" NONE "%s", line, r);
     }
