@@ -35,7 +35,7 @@ void suffixes(char *t, int tLength, int *suff) {
 
 void buildGoods(char *t, int tLength, int *goods) {
     int *suff = malloc(sizeof(int) * tLength);
-    suffixes(t, tLength, goods);
+    suffixes(t, tLength, suff);
     for (int i = 0; i < tLength; ++i) {
         goods[i] = 2 * tLength - 1 - i;
     }
