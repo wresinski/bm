@@ -33,9 +33,30 @@ void suffixes(char *t, int tLength, int *suff) {
     }
 }
 
+void suffixes_new(char *t, int tLength, int *suff) {
+    suff[tLength - 1] = tLength;
+    int f = tLength - 1, g = 0;
+    for (int i = tLength - 2; i >= 0; --i) {
+	if (i != tLength - 2 && i > g && suff[i + tLength - 1 - f] < i - g) {
+	    suff[i] = suff[i + tLength - 1 - f];
+	} else {
+	    if (i == tLength - 2 || i < g) {
+		g = i;
+	    }
+	    f = i;
+	    while (g >= 0) {
+		if (t[g] != t[tLength - 1 - f + g])
+		    break;
+		g--;
+	    }
+            suff[i] = f - g;
+        }
+    }
+}
+
 void buildGoods(char *t, int tLength, int *goods) {
     int *suff = malloc(sizeof(int) * tLength);
-    suffixes(t, tLength, suff);
+    suffixes_new(t, tLength, suff);
     for (int i = 0; i < tLength; ++i) {
         goods[i] = 2 * tLength - 1 - i;
     }
@@ -115,7 +136,7 @@ int searchFile(char *path, char *t) {
             i = index + tLength;
             c++;
             line_p++;
-            if (c > 0 && line_p == 1)
+            if (line_p == 1)
                 printf(RED "\n%s:\n" NONE, path);
         }
         if (c > 0)
@@ -143,8 +164,8 @@ int searchDir(char *pathname, char *t) {
             sprintf(buf, "%s/%s", pathname, ptr->d_name);
             if (IS_EXT(buf, ".c") == 0 || IS_EXT(buf, ".h") == 0 ||
                 IS_EXT(buf, ".cpp") == 0 || IS_EXT(buf, ".hpp") == 0 ||
-                IS_EXT(buf, ".cc") == 0 || IS_EXT(buf, ".s") == 0 ||
-                IS_EXT(buf, ".S") == 0 || IS_EXT(buf, ".asm") == 0)
+                IS_EXT(buf, ".cc") == 0 /*|| IS_EXT(buf, ".s") == 0 ||
+                IS_EXT(buf, ".S") == 0 || IS_EXT(buf, ".asm") == 0*/)
                 searchFile(buf, t);
         }
     }
