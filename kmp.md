@@ -89,3 +89,6 @@ void getNextVal(char *t, int tLength, int *next) {
     }
 }
 ```
+#### 4.复杂度分析
+* 时间复杂度：$O(n)$，其中$n$是字符串s的长度
+* 空间复杂度：$O(n)$
