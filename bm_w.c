@@ -1,11 +1,17 @@
 #include "color.h"
 #include <io.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifndef _WIN32
 #include <unistd.h>
+#else
+#define S_ISDIR(m) (((m) & 0170000) == (0040000))
+#endif
 
 #define IS_EXT(name, ext) strcmp(&name[strlen(name) - strlen(ext)], ext)
 
@@ -126,7 +132,7 @@ int searchFile(char *path, char *t) {
 }
 
 int searchDir(char *pathname, char *t) {
-    long handle;
+    intptr_t handle;
     struct _finddata_t findData;
     char buf[1024];
     strcpy(buf, pathname);
@@ -161,8 +167,6 @@ int searchDir(char *pathname, char *t) {
 }
 
 int main(int argc, char *argv[]) {
-    int fff = 0;
-    printf("%d\n", fff);
     /*
         char s[1024] = {0};
         char t[128] = {0};
